@@ -36,7 +36,7 @@ jobs:
             - composer/install_dependencies
             -   run:
                     name: Run PHPUnit tests
-                    command: << parameters.path >> --log-junit test-results/tests.xml << parameters.flags >>
+                    command: << parameters.path >> --log-junit test-results/tests.xml --do-not-cache-result << parameters.flags >>
             -   store_test_results:
                     path: test-results
             -   store_artifacts:
