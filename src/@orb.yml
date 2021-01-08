@@ -29,6 +29,7 @@ jobs:
             flags:
                 type: string
                 description: Optional PHPUnit flags to append to the test command
+                default: ""
         executor: << parameters.executor >>
         steps:
             - checkout
