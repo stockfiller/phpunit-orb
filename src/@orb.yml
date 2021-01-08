@@ -30,13 +30,26 @@ jobs:
                 type: string
                 description: Optional PHPUnit flags to append to the test command
                 default: ""
+            configuration:
+                type: string
+                description: Optional PHPUnit configuration path
+                default: ""
+            testsuite:
+                type: string
+                description: Optional PHPUnit testsuite
+                default: ""
         executor: << parameters.executor >>
         steps:
             - checkout
             - composer/install
             -   run:
                     name: Run PHPUnit tests
-                    command: << parameters.path >> --log-junit test-results/tests.xml --do-not-cache-result << parameters.flags >>
+                    environment:
+                        PHPUNIT_FLAGS: >-
+                            <<# parameters.configuration >> --configuration << parameters.configuration >> <</ parameters.configuration >>
+                            <<# parameters.testsuite >> --testsuite << parameters.testsuite >> <</ parameters.testsuite >>
+                            << parameters.flags >>
+                    command: << parameters.path >> --log-junit test-results/tests.xml --do-not-cache-result ${PHPUNIT_FLAGS}
             -   store_test_results:
                     path: test-results
             -   store_artifacts:
