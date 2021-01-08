@@ -7,7 +7,7 @@ display:
     source_url: "https://github.com/stockfiller/phpunit-orb"
 
 orbs:
-    composer: stockfiller/composer@0.0.30
+    composer: stockfiller/composer@0.0.31
 
 executors:
     default:
@@ -31,15 +31,13 @@ jobs:
                 description: Optional PHPUnit flags to append to the test command
                 default: ""
         executor: << parameters.executor >>
-        environment:
-            TEST_RESULTS_PATH: test-results
         steps:
             - checkout
-            - composer/install_dependencies
+            - composer/install
             -   run:
                     name: Run PHPUnit tests
-                    command: << parameters.path >> --log-junit ${TEST_RESULTS_PATH}/tests.xml --do-not-cache-result << parameters.flags >>
+                    command: << parameters.path >> --log-junit test-results/tests.xml --do-not-cache-result << parameters.flags >>
             -   store_test_results:
-                    path: "${TEST_RESULTS_PATH}"
+                    path: test-results
             -   store_artifacts:
-                    path: "${TEST_RESULTS_PATH}"
+                    path: test-results
