@@ -20,11 +20,16 @@ parameters:
         description: Path to store the JUnit test results
         type: string
         default: test-results/junit.xml
+    no-cache:
+        description: Disable to skip cache
+        type: boolean
+        default: true
 steps:
     -   run:
             name: Run PHPUnit tests
             command: >-
-                << parameters.bin >> --log-junit << parameters.junit-path >> --do-not-cache-result
+                << parameters.bin >> --log-junit << parameters.junit-path >>
+                <<# parameters.no-cache >> --do-not-cache-result <</ parameters.no-cache >>
                 <<# parameters.configuration >> --configuration << parameters.configuration >> <</ parameters.configuration >>
                 <<# parameters.testsuite >> --testsuite << parameters.testsuite >> <</ parameters.testsuite >>
                 << parameters.flags >>
