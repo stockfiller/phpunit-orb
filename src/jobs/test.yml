@@ -24,6 +24,10 @@ parameters:
         description: Path to store the JUnit test results
         type: string
         default: test-results/junit.xml
+    no-cache:
+        description: Disable to skip cache
+        type: boolean
+        default: true
 executor: << parameters.executor >>
 steps:
     - checkout
@@ -34,3 +38,4 @@ steps:
             configuration: << parameters.configuration >>
             testsuite: << parameters.testsuite >>
             junit-path: << parameters.junit-path >>
+            no-cache: << parameters.no-cache >>
