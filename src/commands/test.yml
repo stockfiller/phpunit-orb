@@ -1,0 +1,34 @@
+description: Run PHPUnit tests
+parameters:
+    bin:
+        description: Path to the PHPUnit binary
+        type: string
+        default: vendor/bin/phpunit
+    flags:
+        description: Optional PHPUnit flags to append to the test command
+        type: string
+        default: ""
+    configuration:
+        description: Optional PHPUnit configuration path
+        type: string
+        default: ""
+    testsuite:
+        description: Optional PHPUnit testsuite
+        type: string
+        default: ""
+    junit-path:
+        description: Path to store the JUnit test results
+        type: string
+        default: test-results/junit.xml
+steps:
+    -   run:
+            name: Run PHPUnit tests
+            command: >-
+                << parameters.bin >> --log-junit << parameters.junit-path >> --do-not-cache-result
+                <<# parameters.configuration >> --configuration << parameters.configuration >> <</ parameters.configuration >>
+                <<# parameters.testsuite >> --testsuite << parameters.testsuite >> <</ parameters.testsuite >>
+                << parameters.flags >>
+    -   store_test_results:
+            path: << parameters.junit-path >>
+    -   store_artifacts:
+            path: << parameters.junit-path >>

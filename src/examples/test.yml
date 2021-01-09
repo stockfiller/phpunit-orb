@@ -1,0 +1,9 @@
+description: Run PHPUnit tests
+usage:
+    version: 2.1
+    orbs:
+        phpunit: stockfiller/phpunit@1.0.0
+    workflows:
+        foo:
+            jobs:
+                - phpunit/test

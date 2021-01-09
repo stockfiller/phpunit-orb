@@ -1,0 +1,36 @@
+description: Run PHPUnit tests
+parameters:
+    executor:
+        type: executor
+        default: default
+        description: Environment to run the tests inside
+    bin:
+        description: Path to the PHPUnit binary
+        type: string
+        default: vendor/bin/phpunit
+    flags:
+        description: PHPUnit flags to append to the test command
+        type: string
+        default: ""
+    configuration:
+        description: PHPUnit configuration path
+        type: string
+        default: ""
+    testsuite:
+        description: PHPUnit testsuite
+        type: string
+        default: ""
+    junit-path:
+        description: Path to store the JUnit test results
+        type: string
+        default: test-results/junit.xml
+executor: << parameters.executor >>
+steps:
+    - checkout
+    - composer/install
+    -   test:
+            bin: << parameters.bin >>
+            flags: << parameters.flags >>
+            configuration: << parameters.configuration >>
+            testsuite: << parameters.testsuite >>
+            junit-path: << parameters.junit-path >>
