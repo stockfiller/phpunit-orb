@@ -5,15 +5,15 @@ parameters:
         type: string
         default: vendor/bin/phpunit
     flags:
-        description: Optional PHPUnit flags to append to the test command
+        description: PHPUnit flags to append to the test command
         type: string
         default: ""
     configuration:
-        description: Optional PHPUnit configuration path
+        description: PHPUnit configuration path
         type: string
         default: ""
     testsuite:
-        description: Optional PHPUnit testsuite
+        description: PHPUnit testsuite
         type: string
         default: ""
     junit-path:
