@@ -7,7 +7,7 @@ display:
     source_url: "https://github.com/stockfiller/phpunit-orb"
 
 orbs:
-    composer: stockfiller/composer@0.0.31
+    composer: stockfiller/composer@0.0.35
 
 executors:
     default:
