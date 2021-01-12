@@ -21,7 +21,7 @@
 # SOFTWARE.
 version: 2.1
 
-description: Run PHPUnit tests
+description: Run PHPUnit (version 8 and above) tests
 
 display:
   home_url: "https://stockfiller.com"
