@@ -58,7 +58,7 @@ parameters:
     type: string
     default: ""
   src-path:
-    description: Path to the source directory
+    description: Path to the source directory. Used primarily by code coverage
     type: string
     default: ""
 steps:
