@@ -73,9 +73,7 @@ steps:
         <<# parameters.coverage >>
         <<# parameters.coverage-path >>
         --coverage-<< parameters.coverage >> << parameters.coverage-path >>
-        <<# parameters.src-path >>
-        --coverage-filter << parameters.src-path >>
-        <</ parameters.src-path >>
+        <<# parameters.src-path >> --coverage-filter << parameters.src-path >> <</ parameters.src-path >>
         <</ parameters.coverage-path >>
         <</ parameters.coverage >>
         <<# parameters.test-path >> << parameters.test-path >> <</ parameters.test-path >>
