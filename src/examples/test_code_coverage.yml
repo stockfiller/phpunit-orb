@@ -19,7 +19,9 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-description: Run PHPUnit tests and generate code coverage information
+description: >-
+  Run PHPUnit tests and generate code coverage information. If you have a PHPUnit configuration you can omit
+  the parameters.
 usage:
   version: 2.1
   orbs:
@@ -39,6 +41,7 @@ usage:
             coverage: clover
             coverage-path: coverage/clover.xml
             src-path: src
+            test-path: tests
   workflows:
     foo:
       jobs:
