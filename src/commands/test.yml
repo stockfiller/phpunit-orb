@@ -66,7 +66,7 @@ steps:
         --do-not-cache-result
         <<# parameters.configuration >> --configuration << parameters.configuration >> <</ parameters.configuration >>
         <<# parameters.testsuite >> --testsuite << parameters.testsuite >> <</ parameters.testsuite >>
-        <<# parameters.coverage >> <<# parameters.coverage-path >> --coverage-<< parameters.coverage >> << parameters.coverage-path >> <</ parameters.coverage-path >> <</ parameters.coverage >>
+        <<# parameters.coverage >> <<# parameters.coverage-path >> --coverage-<< parameters.coverage >> << parameters.coverage-path >> <<# parameters.path >>--coverage-filter << parameters.path >> <</ parameters.path >> <</ parameters.coverage-path >> <</ parameters.coverage >>
         <<# parameters.path >> << parameters.path >> <</ parameters.path >>
   - store_test_results:
       path: << parameters.junit-path >>
