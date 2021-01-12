@@ -32,14 +32,14 @@ jobs:
       # Normal test
       - phpunit/test:
           bin: tests/vendor/bin/phpunit
-          path: tests/Test.php
+          path: tests/FooTest.php
       # Code coverage test
       - phpunit/test:
           bin: tests/vendor/bin/phpunit
           coverage: true
           coverage-format: clover
           coverage-path: coverage/clover.xml
-          path: tests/Test.php
+          path: tests/FooTest.php
       - run: |-
           if [ ! -f "coverage/clover.xml" ]; then
             echo 'Test failed, "coverage/clover.xml" does not exist'
