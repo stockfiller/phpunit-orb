@@ -54,7 +54,7 @@ parameters:
     type: string
     default: ""
   test-path:
-    description: Path to directory or a file to test
+    description: Path to a directory with tests or a file to test
     type: string
     default: ""
   src-path:
