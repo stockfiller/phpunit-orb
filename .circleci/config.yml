@@ -37,7 +37,7 @@ jobs:
       - phpunit/test:
           bin: tests/vendor/bin/phpunit
           coverage: true
-          coverage-format: clover
+          coverage-format: "clover"
           coverage-path: coverage/clover.xml
           path: tests/Test.php
       - run: |-
