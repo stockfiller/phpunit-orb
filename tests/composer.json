@@ -1,0 +1,8 @@
+{
+    "name": "stockfiller/phpunit-orb",
+    "type": "project",
+    "require": {
+        "php": "^7.4",
+        "phpunit/phpunit": "^9.5"
+    }
+}

@@ -19,12 +19,30 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-description: Run PHPUnit tests
+description: >-
+  Run PHPUnit tests and generate code coverage information. If you have a PHPUnit configuration you can omit
+  the parameters.
 usage:
   version: 2.1
   orbs:
     phpunit: stockfiller/phpunit@1.0.0
+  commands:
+    test_code_coverage:
+      docker:
+        - image: php:7.4-alpine
+      steps:
+        - run:
+            name: Install PCOV and git
+            command: |-
+              apk add --update --no-cache ${PHPIZE_DEPS} git
+              pecl install pcov-1.0.6
+              docker-php-ext-enable pcov
+        - phpunit/test:
+            coverage: clover
+            coverage-path: coverage/clover.xml
+            src-path: src
+            test-path: tests
   workflows:
     foo:
       jobs:
-        - phpunit/test
+        - test_code_coverage

@@ -1,0 +1,94 @@
+version: 2.1
+
+orbs:
+  phpunit: stockfiller/phpunit@<<pipeline.parameters.dev-orb-version>>
+  composer: stockfiller/composer@1
+  orb-tools: circleci/orb-tools@10.0
+  bats: circleci/bats@1.0
+  shellcheck: circleci/shellcheck@2.0
+
+# These parameters are used internally by orb-tools. Skip to the Jobs section.
+parameters:
+  run-integration-tests:
+    description: An internal flag to prevent integration test from running before a development version has been created.
+    type: boolean
+    default: false
+  dev-orb-version:
+    description: >-
+      The development version of the orb to test.
+      This value is automatically adjusted by the "trigger-integration-tests-workflow" job to correspond with the specific version created by the commit and should not be edited.
+      A "dev:alpha" version must exist for the initial pipeline run.
+    type: string
+    default: "dev:alpha"
+
+jobs:
+  integration-test:
+    docker:
+      - image: php:7.4-alpine
+    steps:
+      - run:
+          name: Install PCOV
+          command: |-
+            apk add --update --no-cache ${PHPIZE_DEPS}
+            pecl install pcov-1.0.6
+            docker-php-ext-enable pcov
+      - checkout
+      - composer/install_bin
+      - composer/install:
+          working-dir: tests
+      # Normal test
+      - phpunit/test:
+          bin: tests/vendor/bin/phpunit
+          test-path: tests
+          src-path: tests
+      # Code coverage test
+      - phpunit/test:
+          bin: tests/vendor/bin/phpunit
+          coverage: clover
+          coverage-path: coverage/clover.xml
+          test-path: tests
+          src-path: tests
+      - run:
+          name: Assert code coverage
+          command: |-
+            if [ ! -f "coverage/clover.xml" ]; then
+              echo 'Test failed, "coverage/clover.xml" does not exist'
+              exit 1
+            fi
+
+workflows:
+  test-pack:
+    unless: << pipeline.parameters.run-integration-tests >>
+    jobs:
+      - orb-tools/lint
+      - orb-tools/pack
+      # Uncomment if scripts are added
+      # - shellcheck/check:
+      #    dir: ./src/scripts
+      #    exclude: SC2148
+      - orb-tools/publish-dev:
+          orb-name: stockfiller/phpunit
+          context: orb-publishing
+          requires:
+            - orb-tools/lint
+            - orb-tools/pack
+            # - shellcheck/check
+      - orb-tools/trigger-integration-tests-workflow:
+          context: orb-publishing
+          requires: [ orb-tools/publish-dev ]
+
+  integration-test_deploy:
+    when: << pipeline.parameters.run-integration-tests >>
+    jobs:
+      - integration-test
+      - orb-tools/dev-promote-prod-from-commit-subject:
+          orb-name: stockfiller/phpunit
+          add-pr-comment: false
+          fail-if-semver-not-indicated: true
+          publish-version-tag: true
+          ssh-fingerprints: "ae:c6:af:f7:42:0c:08:c6:9b:0b:de:a8:85:fa:a1:da"
+          context: [ orb-publishing ]
+          requires: [ integration-test ]
+          filters:
+            branches:
+              only: master
