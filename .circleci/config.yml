@@ -39,13 +39,13 @@ jobs:
       # Normal test
       - phpunit/test:
           bin: tests/vendor/bin/phpunit
-          path: tests/FooTest.php
+          path: tests
       # Code coverage test
       - phpunit/test:
           bin: tests/vendor/bin/phpunit
           coverage: clover
           coverage-path: coverage/clover.xml
-          path: tests/FooTest.php
+          path: tests
       - run:
           name: Assert code coverage
           command: |-

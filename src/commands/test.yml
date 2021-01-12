@@ -57,6 +57,10 @@ parameters:
     description: Path to directory or a file to test
     type: string
     default: ""
+  src-path:
+    description: Path to the source directory
+    type: string
+    default: ""
 steps:
   - run:
       name: Run PHPUnit tests
@@ -69,9 +73,9 @@ steps:
         <<# parameters.coverage >>
         <<# parameters.coverage-path >>
         --coverage-<< parameters.coverage >> << parameters.coverage-path >>
-        <<# parameters.path >>
-        --coverage-filter << parameters.path >>
-        <</ parameters.path >>
+        <<# parameters.src-path >>
+        --coverage-filter << parameters.src-path >>
+        <</ parameters.src-path >>
         <</ parameters.coverage-path >>
         <</ parameters.coverage >>
         <<# parameters.path >> << parameters.path >> <</ parameters.path >>
