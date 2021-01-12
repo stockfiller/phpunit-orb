@@ -37,25 +37,22 @@ parameters:
     description: Path to store the JUnit test results
     type: string
     default: test-results/junit.xml
-  coverage:
-    description: Generate code coverage
-    type: boolean
-    default: false
   coverage-format:
     description: Format of code coverage
     type: enum
     enum:
+      - ""
       - clover
       - crap4j
       - html
       - php
       - text
       - xml
-    default: clover
+    default: ""
   coverage-path:
     description: Path to code coverage output
     type: string
-    default: coverage/clover.xml
+    default: ""
   path:
     description: Path to directory or a file to test
     type: string
@@ -69,7 +66,7 @@ steps:
         --do-not-cache-result
         <<# parameters.configuration >> --configuration << parameters.configuration >> <</ parameters.configuration >>
         <<# parameters.testsuite >> --testsuite << parameters.testsuite >> <</ parameters.testsuite >>
-        <<# parameters.coverage >> --coverage-<< parameters.coverage-format >> << parameters.coverage-path >> <</ parameters.coverage >>
+        <<# parameters.coverage-format >> <<# parameters.coverage-path >> --coverage-<< parameters.coverage-format >> << parameters.coverage-path >> <</ parameters.coverage-path >> <</ parameters.coverage-format >>
         <<# parameters.path >> << parameters.path >> <</ parameters.path >>
   - store_test_results:
       path: << parameters.junit-path >>
