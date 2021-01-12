@@ -41,7 +41,7 @@ parameters:
     description: Path to store the JUnit test results
     type: string
     default: test-results/junit.xml
-  coverage-format:
+  coverage:
     description: Format of code coverage
     type: enum
     enum:
@@ -70,6 +70,6 @@ steps:
       configuration: << parameters.configuration >>
       testsuite: << parameters.testsuite >>
       junit-path: << parameters.junit-path >>
-      coverage-format: << parameters.coverage-format >>
+      coverage: << parameters.coverage >>
       coverage-path: << parameters.coverage-path >>
       path: << parameters.path >>

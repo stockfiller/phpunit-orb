@@ -43,7 +43,7 @@ jobs:
       # Code coverage test
       - phpunit/test:
           bin: tests/vendor/bin/phpunit
-          coverage-format: clover
+          coverage: clover
           coverage-path: coverage/clover.xml
           path: tests/FooTest.php
       - run:

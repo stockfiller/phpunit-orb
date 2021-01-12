@@ -28,5 +28,5 @@ usage:
     foo:
       jobs:
         - phpunit/test:
-            coverage-format: clover
+            coverage: clover
             coverage-path: coverage/clover.xml
