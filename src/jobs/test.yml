@@ -57,8 +57,12 @@ parameters:
     description: Path to code coverage output
     type: string
     default: ""
-  path:
+  test-path:
     description: Path to directory or a file to test
+    type: string
+    default: ""
+  src-path:
+    description: Path to the source directory. Used primarily by code coverage
     type: string
     default: ""
 executor: << parameters.executor >>
@@ -72,4 +76,5 @@ steps:
       junit-path: << parameters.junit-path >>
       coverage: << parameters.coverage >>
       coverage-path: << parameters.coverage-path >>
-      path: << parameters.path >>
+      test-path: << parameters.test-path >>
+      src-path: << parameters.src-path >>

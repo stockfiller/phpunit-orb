@@ -38,6 +38,7 @@ usage:
         - phpunit/test:
             coverage: clover
             coverage-path: coverage/clover.xml
+            src-path: src
   workflows:
     foo:
       jobs:

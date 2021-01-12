@@ -53,7 +53,7 @@ parameters:
     description: Path to code coverage output
     type: string
     default: ""
-  path:
+  test-path:
     description: Path to directory or a file to test
     type: string
     default: ""
@@ -78,7 +78,7 @@ steps:
         <</ parameters.src-path >>
         <</ parameters.coverage-path >>
         <</ parameters.coverage >>
-        <<# parameters.path >> << parameters.path >> <</ parameters.path >>
+        <<# parameters.test-path >> << parameters.test-path >> <</ parameters.test-path >>
   - store_test_results:
       path: << parameters.junit-path >>
   - store_artifacts:
