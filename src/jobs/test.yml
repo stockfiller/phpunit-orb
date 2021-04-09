@@ -65,10 +65,15 @@ parameters:
     description: Path to the source directory. Used primarily by code coverage
     type: string
     default: ""
+  composer-cache-version:
+    description: Bump to invalidate cache. Set to empty string to disable caching
+    default: v1
+    type: string
 executor: << parameters.executor >>
 steps:
   - checkout
-  - composer/install
+  - composer/install:
+      cache-version: << parameters.composer-cache-version >>
   - test:
       bin: << parameters.bin >>
       configuration: << parameters.configuration >>
